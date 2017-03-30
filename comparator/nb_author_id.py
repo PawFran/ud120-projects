@@ -1,9 +1,11 @@
-#!/usr/bin/python
+#!/usr/bin/python 
 
 """ 
-    This is the code to accompany the Lesson 3 (decision tree) mini-project.
+    This is the code to accompany the Lesson 1 (Naive Bayes) mini-project. 
 
-    Use a Decision Tree to identify emails from the Enron corpus by author:    
+    Use a Naive Bayes Classifier to identify emails by their authors
+    
+    authors and labels:
     Sara has label 0
     Chris has label 1
 """
@@ -24,17 +26,18 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
-from sklearn import tree
-
-print 'number of features:', len(features_train[0])
-
-print 'running decision tree classifier'
-clf = tree.DecisionTreeClassifier(min_samples_split = 40)
+from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
+print 'running naive bayes classifier'
+#clf = GaussianNB()
+clf = BernoulliNB#MultinomialNB()
 t0 = time()
-clf = clf.fit(features_train, labels_train)
+clf.fit(features_train, labels_train)
 print "training time:", round(time()-t0, 3), "s"
-print 'score:', clf.score(features_test, labels_test)
-
+to = time()
+predictions = clf.predict(features_test)
+print "predicting time:", round(time()-t0, 3), "s"
+print 'predictions:', predictions
+print 'score:',clf.score(features_test, labels_test)
 #########################################################
 
 

@@ -1,11 +1,9 @@
-#!/usr/bin/python 
+#!/usr/bin/python
 
 """ 
-    This is the code to accompany the Lesson 1 (Naive Bayes) mini-project. 
+    This is the code to accompany the Lesson 2 (SVM) mini-project.
 
-    Use a Naive Bayes Classifier to identify emails by their authors
-    
-    authors and labels:
+    Use a SVM to identify emails from the Enron corpus by their authors:    
     Sara has label 0
     Chris has label 1
 """
@@ -26,17 +24,24 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
-from sklearn.naive_bayes import MultinomialNB, GaussianNB
-print 'running naive bayes classifier'
-clf = GaussianNB()
+from sklearn import svm
+
+print 'running svm classifier'
+
+#features_train = features_train[:len(features_train)/100]
+#labels_train = labels_train[:len(labels_train)/100]
+
+clf = svm.SVC(C = 10000, kernel = 'rbf')
 t0 = time()
 clf.fit(features_train, labels_train)
-print "training time:", round(time()-t0, 3), "s"
-to = time()
+print "training time:", round(time()-t0, 3), "s" 
+t0 = time()
 predictions = clf.predict(features_test)
 print "predicting time:", round(time()-t0, 3), "s"
-print 'predictions:', predictions
-print 'score:',clf.score(features_test, labels_test)
+print 'score:', clf.score(features_test, labels_test)
+
+#print '10th, 26th, 50th element:', predictions[10], predictions[26], predictions[50]
+#print 'number of Chris emails:', predictions.sum()
 #########################################################
 
 
