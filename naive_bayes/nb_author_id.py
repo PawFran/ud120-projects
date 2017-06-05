@@ -21,12 +21,14 @@ from email_preprocess import preprocess
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
-
-
+#import numpy as np
+#np.savetxt('mini', features_train[:1000])
+#print features_train.shape
+#print features_train.max(axis=1).max()
 
 #########################################################
 ### your code goes here ###
-from sklearn.naive_bayes import MultinomialNB, GaussianNB
+from sklearn.naive_bayes import MultinomialNB, GaussianNB, BernoulliNB
 print 'running naive bayes classifier'
 clf = GaussianNB()
 t0 = time()
