@@ -19,4 +19,11 @@ import pickle
 
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 
+#print enron_data
+#print type(enron_data)
 
+import pandas as pd
+df = pd.DataFrame(enron_data).transpose()
+df = df[['salary', 'bonus']].sort_values('salary', ascending = False)
+df = df[df['salary'] != 'NaN']
+print df.head(5)
