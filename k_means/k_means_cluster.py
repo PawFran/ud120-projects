@@ -43,15 +43,38 @@ data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r")
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
 
+import pandas as pd
+df = pd.DataFrame(data_dict).transpose()[['exercised_stock_options',
+    'salary']]
+stock_options = df['exercised_stock_options']
+stock_cleaned = stock_options[stock_options != 'NaN']
+salary = df['salary']
+salary_cleaned = salary[salary != 'NaN']
+print df.head(5)
+print 'stock options maximum value:', stock_cleaned.max()
+print 'stock options minimum value:', stock_cleaned.min()
+print 'salary maximum value:', salary_cleaned.max()
+print 'salary minimum value:', salary_cleaned.min()
 
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+#feature_3 = "total_payments"
 poi  = "poi"
+#features_list = [poi, feature_1, feature_2, feature_3]
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
+
+from sklearn.preprocessing import MinMaxScaler
+import numpy as np
+scaler = MinMaxScaler()
+data = scaler.fit_transform(data)
 poi, finance_features = targetFeatureSplit( data )
+
+prediction = scaler.transform(np.array([[0., 200000., 1000000.]]))
+print 'prediction for 200k salary and 2m stock options:', prediction
+
 
 
 ### in the "clustering with 3 features" part of the mini-project,
@@ -64,8 +87,10 @@ plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
-
-
+from sklearn.cluster import KMeans
+kmeans = KMeans(n_clusters = 2)
+kmeans.fit(data)
+pred = kmeans.predict(data)
 
 
 ### rename the "name" parameter when you change the number of features
