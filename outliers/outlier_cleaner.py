@@ -27,7 +27,5 @@ def outlierCleaner(predictions, ages, net_worths):
 	data = row[1]
     	cleaned_data.append((data[0], data[1], data[2]))
 
-#    cleaned_data = []
-    
     return cleaned_data
 
