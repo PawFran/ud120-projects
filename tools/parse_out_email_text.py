@@ -37,8 +37,8 @@ def parseOutText(f):
 	words_list_filtered = filter(lambda word: word.strip() != '', words_list)
 	stemmer = SnowballStemmer('english')
 	words_list_stemmed = map(lambda word: stemmer.stem(word), words_list_filtered)
-	print 'stemmed words:'
-	print ' '.join(words_list_stemmed)
+	#print 'stemmed words:'
+	#print ' '.join(words_list_stemmed)
 
     return words
 
